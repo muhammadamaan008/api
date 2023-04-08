@@ -26,7 +26,8 @@ app.get('/', (req,res) => {
     res.send("Welcome to Nadra Api");
 })
 
-app.get('/persons/:cnicNo', async (req, res) => {
+//Get Data of Specific Users with CNIC
+app.get('/person/:cnicNo', async (req, res) => {
     const cnicNo = req.params.cnicNo;
     try {
       const person = await Person.findOne({ cnicNo: cnicNo });
@@ -41,7 +42,7 @@ app.get('/persons/:cnicNo', async (req, res) => {
     }
   });
   
-
+//Get Data of All Persons
 app.get('/all-persons', async (req,res)=> {
 
     const persons = await Person.find();
@@ -55,7 +56,7 @@ app.get('/all-persons', async (req,res)=> {
   });
 
 //Adding a Single Person Data in DB
-  app.post('/persons', async (req, res) => {
+  app.post('/person', async (req, res) => {
     try {
       const newPerson = new Person(req.body);
       const savedPerson = await newPerson.save();
@@ -65,18 +66,55 @@ app.get('/all-persons', async (req,res)=> {
       res.status(500).send("Internal Server Error.");
     }
   });
-  
-//Adding Multiple Person Data in DB
-app.post('/persons', async (req, res) => {
+
+//Update Specific User using CNIC
+app.put('/update-person/:cnic', async (req, res) => {
+    const cnic = req.params.cnic;
     try {
-      const persons = req.body;
-      const result = await Person.insertMany(persons);
-      res.json(result);
+      const person = await Person.findOne({ cnicNo: cnic });
+      if (!person) {
+        return res.status(404).send("Person not found.");
+      }
+      const updatedPerson = await Person.findOneAndUpdate(
+        { cnicNo: cnic },
+        req.body,
+        { new: true }
+      );
+      res.json(updatedPerson);
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error.");
     }
   });
+
+  
+  //Delete Specific User using CNIC
+  app.delete('/delete-person/:cnic', async (req, res) => {
+    const cnic = req.params.cnic;
+    try {
+      const deletedPerson = await Person.findOneAndDelete({ cnicNo: cnic });
+      if (!deletedPerson) {
+        return res.status(404).send("Person not found.");
+      }
+      res.json(deletedPerson);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server Error.");
+    }
+  });
+  
+  
+//Adding Multiple Person Data in DB
+// app.post('/persons', async (req, res) => {
+//     try {
+//       const persons = req.body;
+//       const result = await Person.insertMany(persons);
+//       res.json(result);
+//     } catch (error) {
+//       console.log(error);
+//       res.status(500).send("Internal Server Error.");
+//     }
+//   });
   
 // app.get('/add-person', async (req,res) => {
 //     try {
