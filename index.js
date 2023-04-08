@@ -7,6 +7,9 @@ const Person = require("./models/person");
 const app = express()
 const PORT = process.env.PORT || 3000
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 mongoose.set('strictQuery', false);
 const connectDB = async () => {
   try {
