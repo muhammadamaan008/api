@@ -23,6 +23,22 @@ app.get('/', (req,res) => {
     res.send("Welcome to Nadra Api");
 })
 
+app.get('/persons/:cnicNo', async (req, res) => {
+    const cnicNo = req.params.cnicNo;
+    try {
+      const person = await Person.findOne({ cnicNo: cnicNo });
+      if (person) {
+        res.json(person);
+      } else {
+        res.status(404).send("Person not found.");
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server Error.");
+    }
+  });
+  
+
 app.get('/persons', async (req,res)=> {
 
     const persons = await Person.find();
