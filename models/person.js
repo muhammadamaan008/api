@@ -29,6 +29,7 @@ const PersonSchema = new Schema({
   cnicNo: {
     type: String,
     required: true,
+    unqiue: true
   },
 });
 

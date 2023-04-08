@@ -102,47 +102,6 @@ app.put('/update-person/:cnic', async (req, res) => {
       res.status(500).send("Internal Server Error.");
     }
   });
-  
-  
-//Adding Multiple Person Data in DB
-// app.post('/persons', async (req, res) => {
-//     try {
-//       const persons = req.body;
-//       const result = await Person.insertMany(persons);
-//       res.json(result);
-//     } catch (error) {
-//       console.log(error);
-//       res.status(500).send("Internal Server Error.");
-//     }
-//   });
-  
-// app.get('/add-person', async (req,res) => {
-//     try {
-//       await Person.insertMany([
-//         {
-//             "name": "Bilal Sharafat Ali",
-//             "age": 29,
-//             "bloodGroup": "O+",
-//             "criminalStatus": true,
-//             "address": "Kb Colony",
-//             "phoneNo": 923164846229,
-//             "cnicNo": 3520133868641,
-//         },
-//         {
-//             "name": "Ibrar Sharafat Ali",
-//             "age": 59,
-//             "bloodGroup": "O+",
-//             "criminalStatus": true,
-//             "address": "Kb Colony",
-//             "phoneNo": 923064846229,
-//             "cnicNo": 3520133068641,
-//         }
-//       ]);
-//       res.json({"Data":"Added"})
-//     } catch (error) {
-//       console.log("err", + error);
-//     }
-//   })
 
 //Connect to the database before listening
 connectDB().then(() => {
