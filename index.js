@@ -37,7 +37,7 @@ app.get('/persons', async (req,res)=> {
 
 app.get('/add-person', async (req,res) => {
     try {
-      await Book.insertMany([
+      await Person.insertMany([
         {
             "name": "Bilal Sharafat Ali",
             "age": 29,
