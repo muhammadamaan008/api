@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express')
 const mongoose = require('mongoose')
-const Book = require("./models/books");
+const Person = require("./models/person");
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -20,31 +20,41 @@ const connectDB = async () => {
 
 //Routes go here
 app.get('/', (req,res) => {
-    res.send({ title: 'Books' });
+    res.send("Welcome to Nadra Api");
 })
 
-app.get('/books', async (req,res)=> {
+app.get('/persons', async (req,res)=> {
 
-    const book = await Book.find();
+    const persons = await Person.find();
   
-    if (book) {
-      res.json(book)
+    if (persons) {
+      res.json(persons)
     } else {
       res.send("Something went wrong.");
     }
     
   });
 
-app.get('/add-note', async (req,res) => {
+app.get('/add-person', async (req,res) => {
     try {
       await Book.insertMany([
         {
-          title: "Sons Of Anarchy",
-          body: "Body text goes here...",
+            "name": "Bilal Sharafat Ali",
+            "age": 29,
+            "bloodGroup": "O+",
+            "criminalStatus": true,
+            "address": "Kb Colony",
+            "phoneNo": 923164846229,
+            "cnicNo": 3520133868641,
         },
         {
-          title: "Games of Thrones",
-          body: "Body text goes here...",
+            "name": "Ibrar Sharafat Ali",
+            "age": 59,
+            "bloodGroup": "O+",
+            "criminalStatus": true,
+            "address": "Kb Colony",
+            "phoneNo": 923064846229,
+            "cnicNo": 3520133068641,
         }
       ]);
       res.json({"Data":"Added"})
